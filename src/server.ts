@@ -1,11 +1,11 @@
 import express, {Request, Response} from 'express';
 import { AuthController } from './controllers/userController';
-import {PostController} from './controllers/postController';
+import {CategoryController} from './controllers/categoryController';
 import { PostgresDataSource } from './postgresDataSource'
 const cors = require('cors');
 
 class Server{
-    private postController: PostController;
+    private categoryController: CategoryController;
     private authController: AuthController;
     private app: express.Application;
 
@@ -17,7 +17,7 @@ class Server{
 
     public configuration(){
         this.app.use(cors());
-        this.app.set("port", process.env.PORT || 3000);
+        this.app.set("port", process.env.PORT || 3001);
         this.app.use(express.json());
     }
 
@@ -30,11 +30,11 @@ class Server{
             console.error("Error during Data Source initialization", err)
         })
 
-        this.postController = new PostController();
+        this.categoryController = new CategoryController();
         this.authController = new AuthController();
 
         this.app.use('/auth', this.authController.router);
-        this.app.use('/api/posts/', this.postController.router);
+        this.app.use('/api/category/', this.categoryController.router);
     }
  
     public start(){

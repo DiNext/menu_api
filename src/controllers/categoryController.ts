@@ -1,33 +1,24 @@
 import { Router, Response, Request } from "express";
-import { PostEntity } from "../database/entites/postEntity";
-import { PostService } from "../services/postService";
+import { CategoryEntity } from "../database/entites/categoryEntity";
+import { CategoryService } from "../services/categoryService";
 import { AuthManager } from "../managers/authManager";
 
-export class PostController {
+export class CategoryController {
     public router: Router;
-    private postService: PostService;
+    private categoryService: CategoryService;
     private authManager: AuthManager;
 
     constructor() {
         this.authManager = new AuthManager();
-        this.postService = new PostService();
+        this.categoryService = new CategoryService();
         this.router = Router();
         this.routes();
     }
 
     public index = async (req: Request, res: Response) => {
         try {
-          const successAuth = this.authManager.checkReqAuth(req) as boolean;
-
-          if(successAuth) {
-              const posts = await this.postService.index();
-              res.send(posts);
-          } else {
-              const error = new Error("User is not authorized");
-              console.log(error)
-              res.status(404).send('User is not authorized');
-              return error;
-          }
+          const categories = await this.categoryService.index();
+          res.send(categories); 
         } 
         catch(err) {
           console.log(err, ', when getting posts.')
@@ -41,11 +32,10 @@ export class PostController {
           const successAuth = this.authManager.checkReqAuth(req) as boolean;
 
           if(successAuth) {
-              const post = req['body'] as PostEntity;
-              post.date = new Date().toLocaleString('ru').toString();
-              const newPost = await this.postService.create(post);
+              const category = req['body'] as CategoryEntity;
+              const newCategory = await this.categoryService.create(category);
               
-              res.send(newPost);
+              res.send(newCategory);
           } else {
               const error = new Error("User is not authorized");
               console.log(error)
@@ -65,11 +55,11 @@ export class PostController {
           const successAuth = this.authManager.checkReqAuth(req) as boolean;
 
           if(successAuth) {
-              const post = req['body'] as PostEntity;
+              const category = req['body'] as CategoryEntity;
               const id = req['query']['id'];
-              const updatedPost = await this.postService.update(post, Number(id))
+              const updatedCategory = await this.categoryService.update(category, Number(id))
 
-              res.send(updatedPost);
+              res.send(updatedCategory);
           } else {
               const error = new Error("User is not authorized");
               console.log(error)
@@ -90,9 +80,9 @@ export class PostController {
 
           if(successAuth) {
             const id = req['query']['id'];
-            const deletedPost = await this.postService.delete(Number(id));
+            const deletedCategory = await this.categoryService.delete(Number(id));
 
-            res.send(deletedPost);
+            res.send(deletedCategory);
           } else {
               const error = new Error("User is not authorized");
               console.log(error)

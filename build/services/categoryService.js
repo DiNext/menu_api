@@ -9,27 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostService = void 0;
-const postRepository_1 = require("../repositories/postRepository");
-class PostService {
+exports.CategoryService = void 0;
+const categoryRepository_1 = require("../repositories/categoryRepository");
+class CategoryService {
     constructor() {
         this.index = () => __awaiter(this, void 0, void 0, function* () {
-            const posts = yield this.postRepository.find();
-            return posts;
+            const categories = yield this.categoryRepository.find();
+            return categories;
         });
-        this.create = (post) => __awaiter(this, void 0, void 0, function* () {
-            const newPost = yield this.postRepository.save(post);
-            return newPost;
+        this.create = (category) => __awaiter(this, void 0, void 0, function* () {
+            const newCategory = yield this.categoryRepository.save(category);
+            return newCategory;
         });
-        this.update = (post, id) => __awaiter(this, void 0, void 0, function* () {
-            const updatedPost = yield this.postRepository.update(id, post);
-            return updatedPost;
+        this.update = (category, id) => __awaiter(this, void 0, void 0, function* () {
+            const updatedCategory = yield this.categoryRepository.update(id, category);
+            return updatedCategory;
         });
         this.delete = (id) => __awaiter(this, void 0, void 0, function* () {
-            const deletedPost = yield this.postRepository.delete(id);
-            return deletedPost;
+            const deletedCategory = yield this.categoryRepository.delete(id);
+            return deletedCategory;
         });
-        this.postRepository = postRepository_1.postRepository;
+        this.categoryRepository = categoryRepository_1.categoryRepository;
     }
 }
-exports.PostService = PostService;
+exports.CategoryService = CategoryService;

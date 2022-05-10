@@ -9,27 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostEntity = void 0;
+exports.CategoryEntity = void 0;
 const typeorm_1 = require("typeorm");
-let PostEntity = class PostEntity {
+let CategoryEntity = class CategoryEntity {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], PostEntity.prototype, "id", void 0);
+], CategoryEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], PostEntity.prototype, "author", void 0);
+], CategoryEntity.prototype, "parent", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], PostEntity.prototype, "content", void 0);
+], CategoryEntity.prototype, "image", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], PostEntity.prototype, "date", void 0);
-PostEntity = __decorate([
-    (0, typeorm_1.Entity)('Posts')
-], PostEntity);
-exports.PostEntity = PostEntity;
+], CategoryEntity.prototype, "name", void 0);
+CategoryEntity = __decorate([
+    (0, typeorm_1.Entity)('Category')
+], CategoryEntity);
+exports.CategoryEntity = CategoryEntity;

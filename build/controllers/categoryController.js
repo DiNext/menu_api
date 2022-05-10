@@ -9,25 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostController = void 0;
+exports.CategoryController = void 0;
 const express_1 = require("express");
-const postService_1 = require("../services/postService");
+const categoryService_1 = require("../services/categoryService");
 const authManager_1 = require("../managers/authManager");
-class PostController {
+class CategoryController {
     constructor() {
         this.index = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const successAuth = this.authManager.checkReqAuth(req);
-                if (successAuth) {
-                    const posts = yield this.postService.index();
-                    res.send(posts);
-                }
-                else {
-                    const error = new Error("User is not authorized");
-                    console.log(error);
-                    res.status(404).send('User is not authorized');
-                    return error;
-                }
+                const categories = yield this.categoryService.index();
+                res.send(categories);
             }
             catch (err) {
                 console.log(err, ', when getting posts.');
@@ -39,10 +30,9 @@ class PostController {
             try {
                 const successAuth = this.authManager.checkReqAuth(req);
                 if (successAuth) {
-                    const post = req['body'];
-                    post.date = new Date().toLocaleString('ru').toString();
-                    const newPost = yield this.postService.create(post);
-                    res.send(newPost);
+                    const category = req['body'];
+                    const newCategory = yield this.categoryService.create(category);
+                    res.send(newCategory);
                 }
                 else {
                     const error = new Error("User is not authorized");
@@ -61,10 +51,10 @@ class PostController {
             try {
                 const successAuth = this.authManager.checkReqAuth(req);
                 if (successAuth) {
-                    const post = req['body'];
+                    const category = req['body'];
                     const id = req['query']['id'];
-                    const updatedPost = yield this.postService.update(post, Number(id));
-                    res.send(updatedPost);
+                    const updatedCategory = yield this.categoryService.update(category, Number(id));
+                    res.send(updatedCategory);
                 }
                 else {
                     const error = new Error("User is not authorized");
@@ -84,8 +74,8 @@ class PostController {
                 const successAuth = this.authManager.checkReqAuth(req);
                 if (successAuth) {
                     const id = req['query']['id'];
-                    const deletedPost = yield this.postService.delete(Number(id));
-                    res.send(deletedPost);
+                    const deletedCategory = yield this.categoryService.delete(Number(id));
+                    res.send(deletedCategory);
                 }
                 else {
                     const error = new Error("User is not authorized");
@@ -101,7 +91,7 @@ class PostController {
             }
         });
         this.authManager = new authManager_1.AuthManager();
-        this.postService = new postService_1.PostService();
+        this.categoryService = new categoryService_1.CategoryService();
         this.router = (0, express_1.Router)();
         this.routes();
     }
@@ -112,4 +102,4 @@ class PostController {
         this.router.delete('/', this.delete);
     }
 }
-exports.PostController = PostController;
+exports.CategoryController = CategoryController;

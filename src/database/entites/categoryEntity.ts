@@ -1,16 +1,17 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('Posts')
-export class PostEntity {
+@Entity('Category')
+export class CategoryEntity {
     @PrimaryGeneratedColumn()
     id:number;
 
     @Column()
-    author: string;
+    parent: string;
 
     @Column()
-    content: string;
+    image: string;
 
     @Column()
-    date: string;
+    name: string;
+
 }

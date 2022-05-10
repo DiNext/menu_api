@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userController_1 = require("./controllers/userController");
-const postController_1 = require("./controllers/postController");
+const categoryController_1 = require("./controllers/categoryController");
 const postgresDataSource_1 = require("./postgresDataSource");
 const cors = require('cors');
 class Server {
@@ -25,7 +25,7 @@ class Server {
     }
     configuration() {
         this.app.use(cors());
-        this.app.set("port", process.env.PORT || 3000);
+        this.app.set("port", process.env.PORT || 3001);
         this.app.use(express_1.default.json());
     }
     routes() {
@@ -37,10 +37,10 @@ class Server {
                 .catch((err) => {
                 console.error("Error during Data Source initialization", err);
             });
-            this.postController = new postController_1.PostController();
+            this.categoryController = new categoryController_1.CategoryController();
             this.authController = new userController_1.AuthController();
             this.app.use('/auth', this.authController.router);
-            this.app.use('/api/posts/', this.postController.router);
+            this.app.use('/api/category/', this.categoryController.router);
         });
     }
     start() {
