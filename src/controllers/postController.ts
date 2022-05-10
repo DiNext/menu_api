@@ -1,13 +1,15 @@
 import { Router, Response, Request } from "express";
 import { PostEntity } from "../database/entites/postEntity";
 import { PostService } from "../services/postService";
-import jwt from "jsonwebtoken";
+import { AuthManager } from "../managers/authManager";
 
 export class PostController {
     public router: Router;
     private postService: PostService;
+    private authManager: AuthManager;
 
     constructor() {
+        this.authManager = new AuthManager();
         this.postService = new PostService();
         this.router = Router();
         this.routes();
@@ -15,120 +17,96 @@ export class PostController {
 
     public index = async (req: Request, res: Response) => {
         try {
-            const headerAuth = req.headers.authorization as string | undefined;
-            if(headerAuth){
-              const token = headerAuth.split(' ')[1];
-              const validToken = this.validateToken(token)
+          const successAuth = this.authManager.checkReqAuth(req) as boolean;
 
-              if(validToken){
-                const posts = await this.postService.index();
-        
-                res.send(posts);
-              } else {
-                const error = new Error("User is not authorized");
-                console.log(error)
-                res.status(404).send('User is not authorized');
-                return error;
-              }
-            }
-          } 
-          catch {
-            const error = new Error("Error! Something went wrong.");
-            console.log(error)
-            res.status(404).send('Error occured.');
-            return error;
+          if(successAuth) {
+              const posts = await this.postService.index();
+              res.send(posts);
+          } else {
+              const error = new Error("User is not authorized");
+              console.log(error)
+              res.status(404).send('User is not authorized');
+              return error;
           }
+        } 
+        catch(err) {
+          console.log(err, ', when getting posts.')
+          res.status(404).send('Error occured.');
+          return err;
+        }
     }
 
     public create = async (req: Request, res: Response) => {
         try {
-            const headerAuth = req.headers.authorization as string | undefined;
+          const successAuth = this.authManager.checkReqAuth(req) as boolean;
 
-            if(headerAuth){
-              const token = headerAuth.split(' ')[1];
-              const validToken = this.validateToken(token)
-
-              if(validToken){
-                const post = req['body'] as PostEntity;
-                post.date = new Date().toLocaleString('ru').toString();
-                const newPost = await this.postService.create(post);
-                
-                res.send(newPost);
-              } else {
-                  const error = new Error("User is not authorized");
-                  console.log(error)
-                  res.status(404).send('User is not authorized');
-                  return error;
-              }
-            }
-          } catch {
-              const error = new Error("Error! Something went wrong.");
+          if(successAuth) {
+              const post = req['body'] as PostEntity;
+              post.date = new Date().toLocaleString('ru').toString();
+              const newPost = await this.postService.create(post);
+              
+              res.send(newPost);
+          } else {
+              const error = new Error("User is not authorized");
               console.log(error)
-              res.status(404).send('Error occured.');
+              res.status(404).send('User is not authorized');
               return error;
           }
+        } 
+        catch(err) {
+          console.log(err, ', when creating post.')
+          res.status(404).send('Error occured.');
+          return err;
+        }
     }
 
     public update = async (req: Request, res: Response) => {
         try {
-            const headerAuth = req.headers.authorization as string | undefined;
-            if(headerAuth){
-              const token = headerAuth.split(' ')[1];
-              const validToken = this.validateToken(token)
+          const successAuth = this.authManager.checkReqAuth(req) as boolean;
 
-              if(validToken){
-                const post = req['body'] as PostEntity;
-                const id = req['query']['id'];
-                const updatedPost = await this.postService.update(post, Number(id))
+          if(successAuth) {
+              const post = req['body'] as PostEntity;
+              const id = req['query']['id'];
+              const updatedPost = await this.postService.update(post, Number(id))
 
-                res.send(updatedPost);
-              } else {
-                const error = new Error("User is not authorized");
-                console.log(error)
-                res.status(404).send('User is not authorized');
-                return error;
-              }
-            }
-          } 
-          catch {
-            const error = new Error("Error! Something went wrong.");
-            console.log(error)
-            res.status(404).send('Error occured.');
-            return error;
+              res.send(updatedPost);
+          } else {
+              const error = new Error("User is not authorized");
+              console.log(error)
+              res.status(404).send('User is not authorized');
+              return error;
           }
+        } 
+        catch(err) {
+          console.log(err, ', when updating post')
+          res.status(404).send('Error occured.');
+          return err;
+        }
     }
     
     public delete = async (req: Request, res: Response) => {
         try {
-            const headerAuth = req.headers.authorization as string | undefined;
-            if(headerAuth){
-              const token = headerAuth.split(' ')[1];
-              const validToken = this.validateToken(token)
+          const successAuth = this.authManager.checkReqAuth(req) as boolean;
 
-              if(validToken){
-                const id = req['query']['id'];
-                const deletedPost = await this.postService.delete(Number(id));
+          if(successAuth) {
+            const id = req['query']['id'];
+            const deletedPost = await this.postService.delete(Number(id));
 
-                res.send(deletedPost);
-              } else {
-                  const error = new Error("User is not authorized");
-                  console.log(error)
-                  res.status(404).send('User is not authorized');
-                  return error;
-              }
-            }
-          } 
-          catch {
-            const error = new Error("Error! Something went wrong.");
-            console.log(error)
-            res.status(404).send('Error occured.');
-            return error;
+            res.send(deletedPost);
+          } else {
+              const error = new Error("User is not authorized");
+              console.log(error)
+              res.status(404).send('User is not authorized');
+              return error;
           }
+        } 
+        catch(err) {
+          console.log(err, ', when deleting post.')
+          res.status(404).send('Error occured.');
+          return err;
+        }
     }
 
-    private validateToken(token: string){
-      return jwt.verify(token, process.env.SECRET_KEY || "abrakadabraaa" );
-    }
     public routes(){
         this.router.get('/', this.index);
         this.router.post('/', this.create);

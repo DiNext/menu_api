@@ -18,9 +18,8 @@ class UserService {
                 const usr = yield this.userRepository.findOne({ where: { login: user.login } });
                 return usr;
             }
-            catch (_a) {
-                const error = new Error("Error! Something went wrong.");
-                console.log(error);
+            catch (err) {
+                console.error(err, ', when getting user from db.');
             }
         });
         this.create = (user) => __awaiter(this, void 0, void 0, function* () {
@@ -28,9 +27,8 @@ class UserService {
                 const newUser = yield this.userRepository.save(user);
                 return newUser;
             }
-            catch (_b) {
-                const error = new Error("Error! Something went wrong.");
-                console.log(error);
+            catch (err) {
+                console.error(err, ', when creating user in db.');
             }
         });
         this.userRepository = userRepository_1.UserRepository;

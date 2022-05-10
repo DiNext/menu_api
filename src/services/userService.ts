@@ -13,9 +13,8 @@ export class UserService {
             const usr = await this.userRepository.findOne({where:{login: user.login}}); 
             return usr;
           } 
-          catch {
-            const error = new Error("Error! Something went wrong.");
-            console.log(error);
+          catch(err) {
+            console.error(err, ', when getting user from db.');
           }
     }
 
@@ -24,9 +23,8 @@ export class UserService {
             const newUser =  await this.userRepository.save(user);                                                               
             return newUser; 
           } 
-          catch {
-            const error = new Error("Error! Something went wrong.");
-            console.log(error);
+          catch(err) {
+            console.error(err, ', when creating user in db.');
           }
     }
 }

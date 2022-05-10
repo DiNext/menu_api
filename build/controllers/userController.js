@@ -46,10 +46,10 @@ class AuthController {
                     return error;
                 }
             }
-            catch (_a) {
-                const error = new Error("Something went wrong");
+            catch (err) {
+                console.log(err, ', when login.');
                 res.status(404).send('Something went wrong');
-                return error;
+                return err;
             }
         });
         this.signUp = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -68,10 +68,10 @@ class AuthController {
                 res.status(201).json({ success: true,
                     data: { userId: newUser.id, login: newUser.login, token: token } });
             }
-            catch (_b) {
-                const error = new Error("Something went wrong");
+            catch (err) {
+                console.log(err, ', when signup.');
                 res.status(404).send('Something went wrong');
-                return error;
+                return err;
             }
         });
         this.userService = new userService_1.UserService();

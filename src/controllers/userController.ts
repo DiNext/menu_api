@@ -9,7 +9,7 @@ export class AuthController {
     private userService: UserService;
     private salt;
 
-    constructor() {
+    constructor() { 
         this.userService = new UserService();
         this.salt = bcrypt.genSaltSync(10);
         this.router = Router();
@@ -45,10 +45,10 @@ export class AuthController {
                 res.status(404).send("Wrong password, please check details");
                 return error;
             }
-        } catch{
-            const error = new Error("Something went wrong");
+        } catch(err) {
+            console.log(err, ', when login.')
             res.status(404).send('Something went wrong');
-            return error;
+            return err;
         }
         
     }    
@@ -73,10 +73,10 @@ export class AuthController {
             res.status(201).json({success: true,
                                   data: { userId: newUser.id, login: newUser.login, token: token }});
 
-        } catch{
-            const error = new Error("Something went wrong");
+        } catch(err) {
+            console.log(err, ', when signup.')
             res.status(404).send('Something went wrong');
-            return error;
+            return err;
         }
     }
 
