@@ -19,6 +19,13 @@ export class AuthController {
     public login = async (req: Request, res: Response) => {
         try{
             const user = req['body'] as UserEntity;
+ 
+            if(user.login == undefined || user.password == undefined){
+                const error = new Error("Incorrect req");
+                res.status(404).send("Incorrect req");
+                return error;
+            }
+
             const existingUser = await this.userService.getUser(user);
 
             if(!existingUser){

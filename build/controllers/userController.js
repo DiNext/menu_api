@@ -22,6 +22,11 @@ class AuthController {
         this.login = (req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = req['body'];
+                if (user.login == undefined || user.password == undefined) {
+                    const error = new Error("Incorrect req");
+                    res.status(404).send("Incorrect req");
+                    return error;
+                }
                 const existingUser = yield this.userService.getUser(user);
                 if (!existingUser) {
                     const error = new Error("No such user, please check details");
