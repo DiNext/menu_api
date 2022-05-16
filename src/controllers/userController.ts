@@ -90,7 +90,7 @@ export class AuthController {
     private generateJWT(user: UserEntity) {
         return jwt.sign({userId: user.id, login: user.login}, 
                 process.env.SECRET_KEY || "abrakadabraaa", 
-                {expiresIn: "10h"});
+                {expiresIn: "24h"});
     }
 
     public routes(){

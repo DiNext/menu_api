@@ -85,7 +85,7 @@ class AuthController {
         this.routes();
     }
     generateJWT(user) {
-        return jsonwebtoken_1.default.sign({ userId: user.id, login: user.login }, process.env.SECRET_KEY || "abrakadabraaa", { expiresIn: "10h" });
+        return jsonwebtoken_1.default.sign({ userId: user.id, login: user.login }, process.env.SECRET_KEY || "abrakadabraaa", { expiresIn: "24h" });
     }
     routes() {
         this.router.post('/login', this.login);

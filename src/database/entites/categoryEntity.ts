@@ -11,7 +11,7 @@ export class CategoryEntity {
     @Column()
     image: string;
 
-    @Column()
+    @Column({ unique: true })
     name: string;
 
 }
