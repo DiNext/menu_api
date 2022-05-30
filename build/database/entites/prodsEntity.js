@@ -8,38 +8,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var CategoryEntity_1;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryEntity = void 0;
+exports.ProdsEntity = void 0;
 const typeorm_1 = require("typeorm");
-const prodsEntity_1 = require("./prodsEntity");
-let CategoryEntity = CategoryEntity_1 = class CategoryEntity {
+const categoryEntity_1 = require("./categoryEntity");
+let ProdsEntity = class ProdsEntity {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], CategoryEntity.prototype, "id", void 0);
+], ProdsEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => CategoryEntity_1, (parent) => parent.children),
-    __metadata("design:type", CategoryEntity)
-], CategoryEntity.prototype, "parent", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => CategoryEntity_1, (children) => children.parent),
-    __metadata("design:type", Array)
-], CategoryEntity.prototype, "children", void 0);
+    (0, typeorm_1.ManyToOne)(() => categoryEntity_1.CategoryEntity, (parent) => parent.prods),
+    __metadata("design:type", categoryEntity_1.CategoryEntity)
+], ProdsEntity.prototype, "parent", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], CategoryEntity.prototype, "image", void 0);
+], ProdsEntity.prototype, "image", void 0);
 __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
-], CategoryEntity.prototype, "name", void 0);
+], ProdsEntity.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => prodsEntity_1.ProdsEntity, (prod) => prod.parent),
-    __metadata("design:type", Array)
-], CategoryEntity.prototype, "prods", void 0);
-CategoryEntity = CategoryEntity_1 = __decorate([
-    (0, typeorm_1.Entity)('Category')
-], CategoryEntity);
-exports.CategoryEntity = CategoryEntity;
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], ProdsEntity.prototype, "price", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], ProdsEntity.prototype, "desc", void 0);
+ProdsEntity = __decorate([
+    (0, typeorm_1.Entity)('Prods')
+], ProdsEntity);
+exports.ProdsEntity = ProdsEntity;

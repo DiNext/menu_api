@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userController_1 = require("./controllers/userController");
 const categoryController_1 = require("./controllers/categoryController");
+const prodsController_1 = require("./controllers/prodsController");
 const postgresDataSource_1 = require("./postgresDataSource");
 const cors = require('cors');
 class Server {
@@ -39,8 +40,10 @@ class Server {
             });
             this.categoryController = new categoryController_1.CategoryController();
             this.authController = new userController_1.AuthController();
+            this.prodsController = new prodsController_1.ProdsController();
             this.app.use('/auth', this.authController.router);
             this.app.use('/api/category/', this.categoryController.router);
+            this.app.use('/api/prods/', this.prodsController.router);
         });
     }
     start() {

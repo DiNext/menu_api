@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 import { AuthController } from './controllers/userController';
 import {CategoryController} from './controllers/categoryController';
+import {ProdsController} from './controllers/prodsController';
 import { PostgresDataSource } from './postgresDataSource'
 const cors = require('cors');
 
@@ -8,6 +9,7 @@ class Server{
     private categoryController: CategoryController;
     private authController: AuthController;
     private app: express.Application;
+    private prodsController: ProdsController;
 
     constructor() {
         this.app = express();
@@ -32,9 +34,11 @@ class Server{
 
         this.categoryController = new CategoryController();
         this.authController = new AuthController();
+        this.prodsController = new ProdsController();
 
         this.app.use('/auth', this.authController.router);
         this.app.use('/api/category/', this.categoryController.router);
+        this.app.use('/api/prods/', this.prodsController.router);
     }
  
     public start(){

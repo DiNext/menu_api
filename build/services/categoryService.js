@@ -14,7 +14,7 @@ const categoryRepository_1 = require("../repositories/categoryRepository");
 class CategoryService {
     constructor() {
         this.index = () => __awaiter(this, void 0, void 0, function* () {
-            const categories = yield this.categoryRepository.find();
+            const categories = yield this.categoryRepository.find({ relations: ['prods', 'children', "children.children", "children.children.children", 'parent'] });
             return categories;
         });
         this.create = (category) => __awaiter(this, void 0, void 0, function* () {
