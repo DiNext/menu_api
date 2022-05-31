@@ -4,9 +4,9 @@ export const PostgresDataSource = new DataSource({
     type: "postgres",
     host: "localhost",
     port: 5433,
-    username: "postgres",
+    username: "blog",
     password: "blog",
-    database: "postgres",
+    database: "blogdb",
     entities: ["build/database/entites/**/*.js"],
     synchronize: true,
     name: "blog"
