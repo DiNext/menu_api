@@ -9,7 +9,11 @@ export class CategoryService {
     }
 
     public index = async () => {
-        const categories = await this.categoryRepository.find({ relations: ['prods', 'children', "children.children", "children.children.children",'parent']});
+        const categories = await this.categoryRepository.find({ relations: ['prods', 
+                                                                            'children.prods', 'children.children.prods', 
+                                                                            'children', "children.children", "children.children.children",
+                                                                            'children.parent','children.children.parent',
+                                                                            'parent', 'parent.prods', 'parent.parent.prods', 'parent.parent.parent.prods']});
         return categories;
     }
 

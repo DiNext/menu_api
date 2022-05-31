@@ -6,9 +6,9 @@ exports.PostgresDataSource = new typeorm_1.DataSource({
     type: "postgres",
     host: "localhost",
     port: 5433,
-    username: "blog",
+    username: "postgres",
     password: "blog",
-    database: "blogdb",
+    database: "postgres",
     entities: ["build/database/entites/**/*.js"],
     synchronize: true,
     name: "blog"
