@@ -10,7 +10,7 @@ export class ProdsService {
     }
 
     public index = async () => {
-        const prods = await this.prodsRepository.find();
+        const prods = await this.prodsRepository.find({relations:['parent']});
         return prods;
     }
     

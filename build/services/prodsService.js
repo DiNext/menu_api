@@ -14,7 +14,7 @@ const prodsRepository_1 = require("../repositories/prodsRepository");
 class ProdsService {
     constructor() {
         this.index = () => __awaiter(this, void 0, void 0, function* () {
-            const prods = yield this.prodsRepository.find();
+            const prods = yield this.prodsRepository.find({ relations: ['parent'] });
             return prods;
         });
         this.findByParent = (parent) => __awaiter(this, void 0, void 0, function* () {
